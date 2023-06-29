@@ -1,0 +1,94 @@
+Instruktioner och repo:
+Följ instruktionerna i README.md filen - är de välskrivna och enkla att följa? Ge annars förslag på förbättringar, både i språk och detaljnivå.
+
+INSTRUKTIONER OCH REPO
+
+Jag tycker att instruktionerna gör vad de ska.
+Jag tycker att en liten beskrivning av projektet kunde ha varit på sin plats i readme. Jag tycker också att Scriptet i package.json kunde ha öppnat appen eller index.html. Hade den öppnat index så hade jag fått en beskrivning av vad själva idéen var. Index länkar inte vidare till appen.
+
+
+
+-----------------------------------------------------------------------------------------------------------------
+Kodstruktur:
+Är prototypens kod väl strukturerad? Varför? Vilka designmönster kan du se används i prototypen? Fundera på och ge förslag på förbättringar i kodstrukturen som det ser ut idag.
+
+Hur integreras React komponenterna med data från REST-API:er? Är business logic och använda API:er väl separerade från komponenterna eller är de tätt kopplade?
+
+
+KODSTRUKTUR
+
+komponenten App ligger i samma fil(index.jsx) som den senare kallas på. Den hade kunnat vara en egen fil.
+
+Mappstruktur:
+
+Adapters, components och Pages.
+I Adapters ligger en del get-anrop samt en delete.
+
+I components ligger alla components. Här kunde en tydligare uppdelning ha gjorts, exempelvis att man delar upp komponenterna i olika mappar enligt deras trädstruktur: 
+Articles->ArticleList->Article
+Deliveries->AddDelivery->DeliveryList etc
+Header,Footer
+
+Pages innehåller Deliveries enbart, vilket jag inte riktigt får ihop.
+Jag saknar en tydligare gränsdragning mellan buisness logic, API:er och Komponenterna. Just nu så görs en hel del post-anrop i komponenterna. Skulle gärna se att de flyttades till Adaptersmappen. Namngivningen skulle kunna abstraheras lite mer: getArticleApi() skulle kunna heta bara getArticle().
+
+
+Designmönster som används är:
+Hooks (useState och useEffect)
+Routes 
+Conditional rendering
+Stateless components(Navbar, Header, DeliveryRowsData, ArticleList, Article)
+Propdrilling (Articles->ArticleList->Article)
+Controlled components(AddDelivery,AddArticle,LoginForm)
+
+
+
+-----------------------------------------------------------------------------------------------------------------
+Tillståndshantering:
+Vilka komponenter använder State och till vilket syfte? Är detta lämpliga värden att hantera i State eller finns det förbättringar som kan göras?
+
+
+
+TILLSTÅNDSHANTERING
+
+Komponenter som använder sig av state är:
+App(index.jsx)
+Deliveries - för att hantera ordrar och kunna skicka ner dem till sina barn.  
+
+AddDelivery - för ordervärden som används i en form. Värdena körs sedan i funktionen som skickades ner från componenten ovanifrån för att lägga till orden. Känns rimligt.
+
+DeliveryList - använder state för att kunna filtrera orderlistan. Rimligt.
+
+Delivery -  använder state till en bool som bestämmer om mer detaljerad information om en order ska visas baserat på om användaren klickar på en pil som pekar uppåt eller neråt baserat på om ordern ska visas eller döljas.
+
+DeliveryRows - använder state för att hämta in order-rader. Den använder det för att skapa DeliveryRowsData, men DeliveryRowsData skapar i sin tur paragrafer som inte innehåller dynamisk data. Paragraferna har med artiklar att göra, så jag gissar på att ordrar och artiklar ska vävas samman här i DeliveryRowsData.
+
+
+Articles - För att hantera artiklar och kunna skicka ner dem till sina barn.
+
+AddArticle - precis som AddDelivery
+
+LoginForm - details för att ta emot användarnamn och lösenord från användaren för att sedan köras i en funktion som den har fått via props för att i App-komponenten avgöra om användaren får logga in. Känns rimligt.
+
+-----------------------------------------------------------------------------------------------------------------
+Lokal datalagring
+Vilken information sparas lokalt i webbläsaren när applikationen används? Vart sparas informationen och till vilket syfte. Fundera på om detta är lämplig information för den valda datalagringsplatsen. Bidrar den lokala datalagringen till applikationens funktion och användarbarhet?
+
+
+LOKAL DATALAGRING
+
+
+LocalStorage används för att spara användarnamnet vid inloggning för att man ska kunna stänga ner programmet för att sedan komma tillbaka och vara inloggad. Ett problem är dock att logga ut inte tömmer localStorage, så om man loggar ut och sedan klickar refresh så loggas man in igen. Att ha användaruppgifter i localStorage är egenltligen dåligt då man kan utsättas för cross-site-scripting, dvs att någon loopar igenom ditt localStorage och då får tag på ditt användarnamn i detta läget. 
+URL:en kan användas via react-router för att visa en specifik order just nu. Detta är väl användbart om man behöver dela en specifik order till någon inom företaget som man jobbar, då detta väl är en produkt för företag specifikt.
+-----------------------------------------------------------------------------------------------------------------
+Tredjepartsbibliotek:
+Vilka bibliotek utmärker sig i prototypen? Välj ett och titta upp mer information om biblioteket, fundera på om det är ett lämpligt val för prototypen - Hitta ett alternativt bibliotek som uppfyller samma (eller ungefär samma) som ett tips till din kurskamrat!
+
+TREDJEPARTSBIBLIOTEK
+
+React-Router-Redux är ett bibliotek som ska underlätta för att kombinera router och redux.
+
+
+-----------------------------------------------------------------------------------------------------------------
+
+TIPS: ändra user.value till user.username i nav-komponenten så kommer användarnamnet att visas.

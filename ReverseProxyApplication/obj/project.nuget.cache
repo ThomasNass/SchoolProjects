@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "etwMJhcq6AwP6Ccv6SiMgx5jFzQbIkQU3SDzfWjEmLFdDjyeBoYYBTUq4o9lEhvZwZ5HX0dvx4RrDzzW0DV/YA==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\tn900\\Documents\\Code\\ReverseProxyApplication\\ReverseProxyApplication.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\tn900\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\5.0.13\\microsoft.netcore.app.host.win-x64.5.0.13.nupkg.sha512"
+  ],
+  "logs": []
+}

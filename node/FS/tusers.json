@@ -1,0 +1,18 @@
+[
+  {
+    "userName": "Janne",
+    "userEmail": "janne@email.com"
+  },
+  {
+    "userName": "Panne",
+    "userEmail": "panne@email.com"
+  },
+  {
+    "userName": "Lanne",
+    "userEmail": "lanne@email.com"
+  },
+  {
+    "userName": "Harry",
+    "userEmail": "harry@mail.com"
+  }
+]

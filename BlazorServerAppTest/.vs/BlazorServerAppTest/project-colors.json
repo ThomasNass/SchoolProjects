@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "ProjectMap": {
+    "2568474c-01aa-46e1-9476-2a6cfe513bc4": {
+      "ProjectGuid": "2568474c-01aa-46e1-9476-2a6cfe513bc4",
+      "DisplayName": "BlazorServerAppTest",
+      "ColorIndex": 0
+    }
+  },
+  "NextColorIndex": 1
+}

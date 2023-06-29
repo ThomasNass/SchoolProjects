@@ -1,0 +1,73 @@
+INSTRUKTIONER OCH REPO
+
+Att följa readme funkade bra, och gjorde precis vad som utlovades.
+
+Få din Veckomatsedel verkar inte funkar, får CORS-problem. "No 'Access-Control-Allow-Origin' header is present on the requested resource. If an opaque response serves your needs, set the request's mode to 'no-cors' to fetch the resource with CORS disabled."
+Felet uppstod när jag försökte skriva in mina kalorier och protein per dag som det frågas.
+
+När man skriver in kalorier/protein för en måltid så kommer recept fram som det är tänkt. En omformulering bör ske någonstans. Antingen så bör det stå kalorier/måltid & protein/ måltid, eller så bör sökfunktionen göras om.
+
+Läs mer-knappen / mindre-knappen bör kunna slås samman till en och samma knapp som ändrar text baserat på en bool.
+------------------------------------------------------------------------------------------------------------------
+
+
+KODSTRUKTUR
+koden ligger i en SRC-mapp och är indelad i components, routes och data. mappen data innehåller 3 filer; apidata.js, datahandler.js och mockdata.js.
+
+apidata.js är till för att hantera anropen till api:et.
+
+mockdata.js är en fil som innehåller en array av objekt. Objekten är olika recept. I filen finns funktioner för att hämta recept efter olika kriterier.
+
+datahandler.js anropar en json-fil som inte längre verkar finnas, så datahandler är nog inte längre i bruk.
+
+Tack vare detta så uppnår han en uppdelning mellan buisness logic och UI. 
+
+Förslag på förbättring:
+Det finns en hjälpfunktion i recipe som heter saveRecipe. Den kollar om det finns recept i localStorage, om det specifika receptet man vill spara finns i listan i localStorage och om inte så sparas det valda receptet till listan i localStorage. Denna funktionen skulle kunna ligga i en Services-mapp. 
+
+
+Designmönster som används är : 
+conditional rendering(spritt genom hela applikationen), 
+stateless components(Footer, WriteSavedRecipes, Contact, recipe, recipes(? vet ej om useSearchParams räknas som state), ) 
+stateful components(DetailedRecipe,LogIn,WriteRecipes, CalculateMenu,SavedRecipes,WeeklyMenu )
+controlled components()
+---------------------------------------------------------------------------------------------------------------
+
+TILLSTÅNDSHANTERING
+
+Komponenter som använder sig av state är:
+CalculateMenu
+WriteRecipes
+DetailedRecipe
+
+LogIn
+SavedRecipes
+WeeklyMenu
+
+CalculateMenu använder state till input från användaren för att göra anrop till API:et. Recepten som hämtas baserat på inputen sparas sedan i en array i state. Recept-arrayen används sedan för att göra WriteRecipes-komponenter, om det finns några recept i den det vill säga. 
+-I och med att inputen inte ska användas någon annanstans än i denna komponenten så känns det rimligt att den är i state här.
+
+WriteRecipes använder en bool i state för att visa eller dölja mer detaljerad information om receptet i fråga. 
+-I och med att denna bool enbart rör denna komponenten så känns det rimligt att använda state här.
+
+DetailedRecipe har en array som väntar på ett enskilt recept samt en bool som finns för att skapa en laddningseffekt medan receptet hämtas in.
+-Här är det väl också rimligt att använda state på detta sättet, men ett problem denna komponent har är att varje gång man klickar på Läs Mer i komponenten över den (dvs WriteRecipes) så görs ett nytt api-anrop som hämtar in extrainfo om receptet. Detta bör sparas någonstans så att ett nytt anrop inte behöver göras. Förslagsvis i komponenten ovanför och att receptet langas ner som en prop och att sökningen inte behöver göras om receptet redan finns.
+
+SavedRecipes använder state för att hämta in sparade recept från localStorage till en array, eller tömma arrayen och localStorage. 
+-Det är väl ett rimligt användningsområde om man väljer att se localStorage som en databas, vilket känns rimligt för projektet.
+
+LogIn använder state till variablerna username och password samt boolen loggedin. Variablerna används för att bestämma om användaren får logga in eller inte. loggedin-boolen finns nog bara där för att använda setState så att applikationen uppdateras. Boolen hade egentligen inte behövt vara i LogIn utan den hade kunnat komma ifrån Page då Page använder sig av loggedIn i sin conditional rendering.
+
+
+---------------------------------------------------------------------------------------------------------------
+
+LOKAL DATALAGRING
+Appen lagrar om man är inloggad som en bool i localStorage och de sparade recepten hamnar i en array där också. Recepten hamnar där för att kunna hämtas igen i en annan route-komponent som visar sparade recept. Man kan säga att localStorage används som ett globalt scope när det kommer till recepten. 
+Appen använder sig av react-router, så vägar till olika komponenter/routes sparas i url:en. Om man kopierar en rutt som man inte ska ha åtkomst till som utloggad, loggar ut och sedan försöker komma åt rutten så måste man först logga in, men man kommer faktiskt till rutten när man väl är inloggad. NICE.
+Utöver det så lagrar appen även cookies, mest för att uppfylla ett krav så det bidrar inte till applikationens användning direkt. 
+
+
+-----------------------------------------------------------------------------------------------------------------
+TREDJEPARTSBIBLIOTEK
+
+React-Router-Redux är ett bibliotek som ska underlätta för att kombinera router och redux.

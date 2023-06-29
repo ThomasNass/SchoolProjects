@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "ProjectMap": {
+    "75ccfb37-b920-4d13-9954-3ac49b9cc0d3": {
+      "ProjectGuid": "75ccfb37-b920-4d13-9954-3ac49b9cc0d3",
+      "DisplayName": "ReverseProxyApplication",
+      "ColorIndex": 0
+    }
+  },
+  "NextColorIndex": 1
+}
